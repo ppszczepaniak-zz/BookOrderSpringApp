@@ -49,7 +49,7 @@ CREATE SEQUENCE sequence_customers
 UPDATE customers SET customer_id=(NEXTVAL('sequence_customers'));
 ``` 
 ***
-orders
+orders table
 ```
 create table orders
 (
@@ -72,6 +72,36 @@ CREATE SEQUENCE sequence_orders
    START WITH 1;
    
 UPDATE orders SET order_id=(NEXTVAL('sequence_orders'));
+```
+
+order_items table
+```
+create table order_items
+(
+   order_item_id bigint NOT NULL,
+   order_id bigint NOT NULL,
+   book_id bigint NOT NULL,
+   amount bigint NOT NULL
+);
+
+ALTER TABLE order_items
+ADD CONSTRAINT order_item_id_pk 
+PRIMARY KEY (order_item_id);
+
+ALTER TABLE order_items
+ADD CONSTRAINT order_id_fk 
+FOREIGN KEY (order_id) REFERENCES orders(order_id);
+
+ALTER TABLE order_items
+ADD CONSTRAINT book_id_fk 
+FOREIGN KEY (book_id) REFERENCES books(book_id);
+
+CREATE SEQUENCE sequence_order_items
+   INCREMENT BY 1 
+   MINVALUE 1 
+   START WITH 1;
+   
+UPDATE order_items SET order_item_id=(NEXTVAL('sequence_order_items'));
 ```
 
 #### How stuff works:  
