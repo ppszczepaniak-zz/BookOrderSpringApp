@@ -30,7 +30,7 @@ public class CustomerController {
 
     @PostMapping("/add") //http://localhost:8080/customer/add
     @ResponseStatus(HttpStatus.CREATED) //201
-    public Customer addBook(@RequestBody Customer customer) {
+    public Customer addCustomer(@RequestBody Customer customer) {
         return customerService.add(customer);
     }
 
