@@ -24,7 +24,7 @@ public class BookController {
     }
 
     @GetMapping("/get") ////http://localhost:8080/book/get
-    public Book getBook(@Param("bookId") long bookId) {
+    public Book getBook(@RequestParam("bookId") long bookId) {  //could be @Param (different Annotation from data.repository.query
         return bookService.get(bookId);
     }
 
