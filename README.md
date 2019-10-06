@@ -73,7 +73,7 @@ CREATE SEQUENCE sequence_orders
    
 UPDATE orders SET order_id=(NEXTVAL('sequence_orders'));
 ```
-
+***
 order_items table
 ```
 create table order_items
