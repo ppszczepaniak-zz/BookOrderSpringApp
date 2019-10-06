@@ -18,4 +18,8 @@ public class BookService {
     public List<Book> getAll() {
         return bookStorage.getAllBooks();
     }
+
+    public Book add(Book book) {
+        return bookStorage.addBook(book);
+    }
 }

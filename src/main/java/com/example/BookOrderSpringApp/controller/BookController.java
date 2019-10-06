@@ -3,9 +3,8 @@ package com.example.BookOrderSpringApp.controller;
 import com.example.BookOrderSpringApp.models.Book;
 import com.example.BookOrderSpringApp.services.BookService;
 import com.example.BookOrderSpringApp.storage.BookStorage;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +23,10 @@ private BookService bookService;
         return bookService.getAll();
     }
 
-
+    @PostMapping("/add") //http://localhost:8080/book/get
+    @ResponseStatus(HttpStatus.CREATED) //201
+    public Book addBook(@RequestBody Book book){
+        return bookService.add(book);
+    }
 
 }
