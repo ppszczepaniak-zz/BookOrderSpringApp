@@ -107,7 +107,7 @@ public class CustomerStorageImpl implements CustomerStorage {
     }
 
     @Override
-    public long addCustomer(Customer customer) {
+    public Customer addCustomer(Customer customer) {
         long customerId = 0;
         final String sqlInsertCustomer = "INSERT INTO customers(" +
                 "customer_id, name)" +
@@ -125,7 +125,8 @@ public class CustomerStorageImpl implements CustomerStorage {
             if (resultSet.next()) { //jesli jest jakis  + przesuwa o jeden kursor, zebym mogl odczytac
                 customerId = resultSet.getLong(1); //to wez z niego wartosc
             }
-            return customerId;
+            customer.setCustomerId(customerId);
+            return customer;
 
         } catch (SQLException e) {
             System.err.println("Error during invoking SQL query:\n" + e.getMessage());
@@ -138,13 +139,13 @@ public class CustomerStorageImpl implements CustomerStorage {
 
     @Override
     public void clearTableCustomers() {
-        final String sqlClearDB = "DELETE from customers"; //removes all from table
+        final String sqlClearDB = "DELETE from customers; " + "ALTER SEQUENCE sequence_customers RESTART;"; //removes all from table & restarts the sequence
         Connection connection = initializeDataBaseConnection(); //odpalamy połączenie
         Statement statement = null;
 
         try {
             statement = connection.createStatement();
-            statement.executeQuery(sqlClearDB);
+            statement.execute(sqlClearDB);
         } catch (SQLException e) {
             System.err.println("Error during invoking SQL query:\n" + e.getMessage());
             throw new RuntimeException("Error during invoking SQL query");

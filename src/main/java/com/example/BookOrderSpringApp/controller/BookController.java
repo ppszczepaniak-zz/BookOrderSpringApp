@@ -12,25 +12,25 @@ import java.util.List;
 @RequestMapping("/book")
 public class BookController {
 
-private BookService bookService;
+    private BookService bookService;
 
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
 
     @GetMapping("/getAll") //http://localhost:8080/book/getAll
-    public List<Book> getBooks(){
+    public List<Book> getBooks() {
         return bookService.getAll();
     }
 
     @GetMapping("/get") ////http://localhost:8080/book/get
-    public Book getBook(@Param("bookId") long bookId){
+    public Book getBook(@Param("bookId") long bookId) {
         return bookService.get(bookId);
     }
 
     @PostMapping("/add") //http://localhost:8080/book/add
     @ResponseStatus(HttpStatus.CREATED) //201
-    public Book addBook(@RequestBody Book book){
+    public Book addBook(@RequestBody Book book) {
         return bookService.add(book);
     }
 

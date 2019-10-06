@@ -150,14 +150,13 @@ public class BookStorageImpl implements BookStorage {
 
         try {
             statement = connection.createStatement();
-            statement.executeQuery(sqlClearDB);
+            statement.execute(sqlClearDB);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeDatabaseResources(statement, connection);
         }
     }
-
 
 
 }

@@ -9,7 +9,7 @@ public interface CustomerStorage {
 
     List<Customer> getAllCustomers();
 
-    long addCustomer(Customer customer); //shoud return customerId
+    Customer addCustomer(Customer customer); //shoud return customerId
 
     void clearTableCustomers();
 
