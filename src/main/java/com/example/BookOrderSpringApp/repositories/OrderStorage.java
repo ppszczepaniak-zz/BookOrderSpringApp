@@ -22,7 +22,7 @@ public interface OrderStorage {
      */
 
 
-    //TODO you will encounter this problem with JSON and ObjectMapper
+    //you will encounter this problem with JSON and ObjectMapper:
     /*
 
 {

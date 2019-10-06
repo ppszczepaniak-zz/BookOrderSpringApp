@@ -13,5 +13,5 @@ public interface CustomerStorage {
 
     void clearTableCustomers();
 
-    //TODO add Delete customer feature
+    //TODO Delete customer feature
 }

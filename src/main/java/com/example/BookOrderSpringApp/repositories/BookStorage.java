@@ -12,5 +12,5 @@ public interface BookStorage {
 
     void clearTableBooks();
 
-    //TODO add Delete book feature
+    //TODO Delete book feature
 }

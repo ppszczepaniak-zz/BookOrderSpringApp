@@ -2,7 +2,7 @@ package com.example.BookOrderSpringApp.controller;
 
 import com.example.BookOrderSpringApp.models.Book;
 import com.example.BookOrderSpringApp.services.BookService;
-import com.example.BookOrderSpringApp.repositories.BookStorage;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +23,12 @@ private BookService bookService;
         return bookService.getAll();
     }
 
-    @PostMapping("/add") //http://localhost:8080/book/get
+    @GetMapping("/get") ////http://localhost:8080/book/get
+    public Book getBook(@Param("bookId") long bookId){
+        return bookService.get(bookId);
+    }
+
+    @PostMapping("/add") //http://localhost:8080/book/add
     @ResponseStatus(HttpStatus.CREATED) //201
     public Book addBook(@RequestBody Book book){
         return bookService.add(book);

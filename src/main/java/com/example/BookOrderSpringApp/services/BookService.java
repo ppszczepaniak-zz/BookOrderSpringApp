@@ -14,12 +14,15 @@ public class BookService {
         this.bookStorage = bookStorage;
     }
 
-
     public List<Book> getAll() {
         return bookStorage.getAllBooks();
     }
 
     public Book add(Book book) {
         return bookStorage.addBook(book);
+    }
+
+    public Book get(long bookId) {
+        return bookStorage.getBook(bookId);
     }
 }
