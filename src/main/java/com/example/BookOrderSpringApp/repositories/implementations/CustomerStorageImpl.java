@@ -9,49 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class CustomerStorageImpl implements CustomerStorage {
+public class CustomerStorageImpl extends AbstractStorage implements CustomerStorage {
 
-    private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/bookorder"; //create it first
-    private static final String DATABASE_USER = "postgres";
-    private static final String DATABASE_PASS = "password";  //or postgress
     private static List<Customer> customerList = new ArrayList<>();
-
-    static {  //loading Driver class so it works on older Java or JDBC (blok statyczny, odpali sie na starcie)
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            System.err.println("Server can't find postgresql Driver class:\n" + e);
-        }
-    }
-
-    private Connection initializeDataBaseConnection() { //otwiera polaczenie
-        try {
-            return DriverManager.getConnection(JDBC_URL, DATABASE_USER, DATABASE_PASS);
-        } catch (SQLException e) {
-            System.err.println("Server can't initialize database connection:\n" + e);
-            throw new RuntimeException("Server can't initialize database connection"); //Runtime rzucony po to zeby tu przerwal dzialanie programu
-        }
-    }
-
-    private void closeDatabaseResources(Statement statement, Connection connection) { //zamyka polaczenie i statement
-        try {
-            if (statement != null) {
-                statement.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            System.err.println("Error during closing database resources:\n" + e);
-            throw new RuntimeException("Error during closing database resources"); //Runtime rzucony po to zeby tu przerwal dzialanie programu
-        }
-    }
-
 
     @Override
     public Customer getCustomer(long customerId) {
         final String sqlSelectOneCustomer = "SELECT * from books WHERE customer_id = ?;";
-        Connection connection = initializeDataBaseConnection();
+        Connection connection = databaseManager.initializeDataBaseConnection();
         PreparedStatement preparedStatement = null;
 
         try {
@@ -71,7 +36,7 @@ public class CustomerStorageImpl implements CustomerStorage {
             throw new RuntimeException("Error during invoking SQL query");
 
         } finally { //zamykam statement i connection
-            closeDatabaseResources(preparedStatement, connection);
+            databaseManager.closeDatabaseResources(preparedStatement, connection);
         }
         return null;
     }
@@ -81,7 +46,7 @@ public class CustomerStorageImpl implements CustomerStorage {
         customerList.clear(); //czyszcze liste, bo inaczej kazde wywolanie getAllBooks dopisywaloby wszystkie do listy
         final String sqlSelectAllCustomers = "SELECT * from customers;";
 
-        Connection connection = initializeDataBaseConnection();
+        Connection connection = databaseManager.initializeDataBaseConnection();
         Statement statement = null;
 
         try {
@@ -101,7 +66,7 @@ public class CustomerStorageImpl implements CustomerStorage {
             throw new RuntimeException("Error during invoking SQL query");
 
         } finally {
-            closeDatabaseResources(statement, connection);
+            databaseManager.closeDatabaseResources(statement, connection);
         }
         return customerList;
     }
@@ -113,7 +78,7 @@ public class CustomerStorageImpl implements CustomerStorage {
                 "customer_id, name)" +
                 "VALUES (NEXTVAL('sequence_customers'),?) RETURNING customer_id;"; //customerId will be passed to CustomerController
 
-        Connection connection = initializeDataBaseConnection(); //odpalamy połączenie
+        Connection connection = databaseManager.initializeDataBaseConnection(); //odpalamy połączenie
         PreparedStatement preparedStatement = null;
 
         try {
@@ -133,14 +98,14 @@ public class CustomerStorageImpl implements CustomerStorage {
             throw new RuntimeException("Error during invoking SQL query");
 
         } finally { //zamykam statement i connection
-            closeDatabaseResources(preparedStatement, connection);
+            databaseManager.closeDatabaseResources(preparedStatement, connection);
         }
     }
 
     @Override
     public void clearTableCustomers() {
         final String sqlClearDB = "DELETE from customers; " + "ALTER SEQUENCE sequence_customers RESTART;"; //removes all from table & restarts the sequence
-        Connection connection = initializeDataBaseConnection(); //odpalamy połączenie
+        Connection connection = databaseManager.initializeDataBaseConnection(); //odpalamy połączenie
         Statement statement = null;
 
         try {
@@ -150,7 +115,7 @@ public class CustomerStorageImpl implements CustomerStorage {
             System.err.println("Error during invoking SQL query:\n" + e.getMessage());
             throw new RuntimeException("Error during invoking SQL query");
         } finally {
-            closeDatabaseResources(statement, connection);
+            databaseManager.closeDatabaseResources(statement, connection);
         }
     }
 }

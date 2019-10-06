@@ -21,8 +21,10 @@ public class BootStrap {
     }
 
     public void initializeDatabase(){
+        orderStorage.clearTableOrders();
         bookStorage.clearTableBooks(); //clears current database table
         customerStorage.clearTableCustomers();
+
 
         Book book1 = new Book(1,"The Witcher");
         Book book2 = new Book(1,"Lord Of The Rings"); //bookId doesn't matter - is given by database

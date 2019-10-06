@@ -6,7 +6,6 @@ import java.util.List;
 
 public interface OrderStorage {
 
-
     Order getOrder(long orderId);
 
     List<Order> getAllOrders();  //secondary to implement

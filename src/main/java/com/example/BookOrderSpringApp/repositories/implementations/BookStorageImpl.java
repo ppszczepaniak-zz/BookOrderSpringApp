@@ -9,43 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class BookStorageImpl implements BookStorage {
+public class BookStorageImpl extends AbstractStorage implements BookStorage {
 
-    private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/bookorder"; //create it first
-    private static final String DATABASE_USER = "postgres";
-    private static final String DATABASE_PASS = "password";  //or postgress
     private static List<Book> bookList = new ArrayList<>();
-
-    static {  //loading Driver class so it works on older Java or JDBC (blok statyczny, odpali sie na starcie)
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            System.err.println("Server can't find postgresql Driver class:\n" + e);
-        }
-    }
-
-    private Connection initializeDataBaseConnection() { //otwiera polaczenie
-        try {
-            return DriverManager.getConnection(JDBC_URL, DATABASE_USER, DATABASE_PASS);
-        } catch (SQLException e) {
-            System.err.println("Server can't initialize database connection:\n" + e);
-            throw new RuntimeException("Server can't initialize database connection"); //Runtime rzucony po to zeby tu przerwal dzialanie programu
-        }
-    }
-
-    private void closeDatabaseResources(Statement statement, Connection connection) { //zamyka polaczenie i statement
-        try {
-            if (statement != null) {
-                statement.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            System.err.println("Error during closing database resources:\n" + e);
-            throw new RuntimeException("Error during closing database resources"); //Runtime rzucony po to zeby tu przerwal dzialanie programu
-        }
-    }
 
     @Override
     public Book addBook(Book book) {
@@ -57,7 +23,7 @@ public class BookStorageImpl implements BookStorage {
         // 2) RETURNING zwraca wartosc z book_id,
         // po to zebym mogl ja przekazac do BookControllera
 
-        Connection connection = initializeDataBaseConnection(); //odpalamy połączenie
+        Connection connection = databaseManager.initializeDataBaseConnection(); //odpalamy połączenie
         PreparedStatement preparedStatement = null;
 
         try {  //przygotowuje Statement (prepared statement)
@@ -79,7 +45,7 @@ public class BookStorageImpl implements BookStorage {
             throw new RuntimeException("Error during invoking SQL query");
 
         } finally { //zamykam statement i connection
-            closeDatabaseResources(preparedStatement, connection);
+            databaseManager.closeDatabaseResources(preparedStatement, connection);
         }
     }
 
@@ -87,7 +53,7 @@ public class BookStorageImpl implements BookStorage {
     @Override
     public Book getBook(long bookId) {
         final String sqlSelectAllBook = "SELECT * from books WHERE book_id = ?;";
-        Connection connection = initializeDataBaseConnection(); //odpalamy połączenie
+        Connection connection = databaseManager.initializeDataBaseConnection(); //odpalamy połączenie
         PreparedStatement preparedStatement = null;
 
         try {
@@ -106,7 +72,7 @@ public class BookStorageImpl implements BookStorage {
             System.err.println("Error during invoking SQL query:\n" + e.getMessage());
             throw new RuntimeException("Error during invoking SQL query");
         } finally {//zamykam statement i connection
-            closeDatabaseResources(preparedStatement, connection);
+            databaseManager.closeDatabaseResources(preparedStatement, connection);
         }
         return null;
     }
@@ -116,7 +82,7 @@ public class BookStorageImpl implements BookStorage {
         bookList.clear(); //czyszcze liste, bo inaczej kazde wywolanie getAllBooks dopisywaloby wszystkie do listy
         final String sqlSelectAllBook = "SELECT * from books;";
 
-        Connection connection = initializeDataBaseConnection();
+        Connection connection = databaseManager.initializeDataBaseConnection();
         Statement statement = null;
 
         try {
@@ -136,7 +102,7 @@ public class BookStorageImpl implements BookStorage {
             throw new RuntimeException("Error during invoking SQL query");
 
         } finally {
-            closeDatabaseResources(statement, connection);
+            databaseManager.closeDatabaseResources(statement, connection);
         }
         return bookList;
     }
@@ -145,7 +111,7 @@ public class BookStorageImpl implements BookStorage {
     public void clearTableBooks() {
         final String sqlClearDB = "DELETE from books; " +
                 "ALTER SEQUENCE sequence_books RESTART;"; //removes all from table and restarts the sequence
-        Connection connection = initializeDataBaseConnection(); //odpalamy połączenie
+        Connection connection = databaseManager.initializeDataBaseConnection(); //odpalamy połączenie
         Statement statement = null;
 
         try {
@@ -154,7 +120,7 @@ public class BookStorageImpl implements BookStorage {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            closeDatabaseResources(statement, connection);
+            databaseManager.closeDatabaseResources(statement, connection);
         }
     }
 
