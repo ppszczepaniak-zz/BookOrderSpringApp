@@ -1,7 +1,6 @@
 # BookOrderSpringApp
 BookOrderApp but based on String  
-[![Build Status](https://travis-ci.org/ppszczepaniak/BookOrderSpringApp.svg?branch=master)](https://travis-ci.org/ppszczepaniak/BookOrderSpringApp)
-
+[![Build Status](https://travis-ci.com/ppszczepaniak/BookOrderSpringApp.svg?branch=master)](https://travis-ci.com/ppszczepaniak/BookOrderSpringApp)
 
 ### Postgres SQL - create database via these commands:
 ****

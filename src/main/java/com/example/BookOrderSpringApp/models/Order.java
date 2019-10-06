@@ -13,6 +13,14 @@ public class Order {
         return orderItemList;
     }
 
+
+    public Order(long orderId, LocalDateTime orderDate, Customer customer, List<OrderItem> orderItemList) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.customer = customer;
+        this.orderItemList = orderItemList;
+    }
+
     public void setOrderItemList(List<OrderItem> orderItemList) {
         this.orderItemList = orderItemList;
     }

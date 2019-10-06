@@ -6,4 +6,6 @@ public class OrderItem {
     bookid -> amount
      */
 
+    public OrderItem() {
+    }
 }
