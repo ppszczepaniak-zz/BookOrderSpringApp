@@ -46,7 +46,7 @@ public class BookStorageImpl implements BookStorage {
     }
 
     @Override
-    public long addBook(Book book) {
+    public Book addBook(Book book) {
         long bookId = 0;
         final String sqlInsertBook = "INSERT INTO books(" +
                 "book_id, title)" +
@@ -69,7 +69,8 @@ public class BookStorageImpl implements BookStorage {
                 bookId = resultSet.getLong(1); //to wez z niego wartosc
             }
 
-            return bookId; //zwraca bookId
+            book.setBookId(bookId); //nadaje odczytany ID ksiazce ktora dodaje
+            return book; //zwraca bookId
 
         } catch (SQLException e) {
             System.err.println("Error during invoking SQL query:\n" + e.getMessage());
@@ -79,6 +80,7 @@ public class BookStorageImpl implements BookStorage {
             closeDatabaseResources(preparedStatement, connection);
         }
     }
+
 
     @Override
     public Book getBook(long bookId) {

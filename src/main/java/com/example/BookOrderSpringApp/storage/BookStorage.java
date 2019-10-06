@@ -8,7 +8,7 @@ public interface BookStorage {
 
     List<Book> getAllBooks();
 
-    long addBook(Book book); //shoud return bookId
+    Book addBook(Book book); //should return book with ID given by DB
 
     void clearTableBooks();
 
