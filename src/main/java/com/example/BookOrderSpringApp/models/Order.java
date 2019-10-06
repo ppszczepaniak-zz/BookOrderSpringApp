@@ -13,6 +13,8 @@ public class Order {
         return orderItemList;
     }
 
+    public Order() {
+    }
 
     public Order(long orderId, LocalDateTime orderDate, Customer customer, List<OrderItem> orderItemList) {
         this.orderId = orderId;

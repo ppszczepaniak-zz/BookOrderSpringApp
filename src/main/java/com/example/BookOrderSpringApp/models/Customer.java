@@ -4,6 +4,9 @@ public class Customer {
     private String name;
     private long customerId;
 
+    public Customer() {
+    }
+
     public Customer(String name, long customerId) {
         this.name = name;
         this.customerId = customerId;

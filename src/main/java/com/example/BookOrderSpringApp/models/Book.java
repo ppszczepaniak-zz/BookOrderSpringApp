@@ -4,6 +4,9 @@ public class Book {
     private long bookId;
     private String title;
 
+    public Book() {
+    }
+
     public Book(long bookId, String title) {
         this.bookId = bookId;
         this.title = title;
