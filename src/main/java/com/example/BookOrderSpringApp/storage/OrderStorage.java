@@ -1,6 +1,6 @@
-package storage;
+package com.example.BookOrderSpringApp.storage;
 
-import models.Order;
+import com.example.BookOrderSpringApp.models.Order;
 
 import java.util.List;
 

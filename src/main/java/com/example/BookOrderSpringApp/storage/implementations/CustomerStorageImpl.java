@@ -1,7 +1,7 @@
-package storage.implementations;
+package com.example.BookOrderSpringApp.storage.implementations;
 
-import models.Customer;
-import storage.CustomerStorage;
+import com.example.BookOrderSpringApp.models.Customer;
+import com.example.BookOrderSpringApp.storage.CustomerStorage;
 
 import java.sql.*;
 import java.util.ArrayList;

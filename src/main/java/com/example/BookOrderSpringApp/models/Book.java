@@ -1,4 +1,4 @@
-package models;
+package com.example.BookOrderSpringApp.models;
 
 public class Book {
     private long bookId;
