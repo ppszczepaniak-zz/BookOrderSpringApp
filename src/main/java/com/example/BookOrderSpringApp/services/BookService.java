@@ -1,7 +1,7 @@
 package com.example.BookOrderSpringApp.services;
 
 import com.example.BookOrderSpringApp.models.Book;
-import com.example.BookOrderSpringApp.storage.implementations.BookStorageImpl;
+import com.example.BookOrderSpringApp.repositories.implementations.BookStorageImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

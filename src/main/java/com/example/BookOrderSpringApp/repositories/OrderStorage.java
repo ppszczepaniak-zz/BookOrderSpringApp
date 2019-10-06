@@ -1,4 +1,4 @@
-package com.example.BookOrderSpringApp.storage;
+package com.example.BookOrderSpringApp.repositories;
 
 import com.example.BookOrderSpringApp.models.Order;
 

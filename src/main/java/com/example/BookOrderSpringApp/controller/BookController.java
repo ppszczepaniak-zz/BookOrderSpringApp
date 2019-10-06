@@ -2,7 +2,7 @@ package com.example.BookOrderSpringApp.controller;
 
 import com.example.BookOrderSpringApp.models.Book;
 import com.example.BookOrderSpringApp.services.BookService;
-import com.example.BookOrderSpringApp.storage.BookStorage;
+import com.example.BookOrderSpringApp.repositories.BookStorage;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

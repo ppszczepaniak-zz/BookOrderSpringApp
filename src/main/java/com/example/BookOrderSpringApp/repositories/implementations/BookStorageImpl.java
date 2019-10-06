@@ -1,12 +1,14 @@
-package com.example.BookOrderSpringApp.storage.implementations;
+package com.example.BookOrderSpringApp.repositories.implementations;
 
 import com.example.BookOrderSpringApp.models.Book;
-import com.example.BookOrderSpringApp.storage.BookStorage;
+import com.example.BookOrderSpringApp.repositories.BookStorage;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class BookStorageImpl implements BookStorage {
 
     private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/bookorder"; //create it first
